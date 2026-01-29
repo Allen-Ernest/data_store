@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingia | KRCO-DS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <main class="flex-grow flex items-center justify-center px-4">
+        <form method="post" action="{% url 'login_client' %}" class="bg-white p-6 rounded shadow-md w-full max-w-sm">
+            {% csrf_token %}
+            <h2 class="text-center mb-1">Ingia | KRCO-DM</h2>
+            <div class="flex mb-2 border-2 border p-1 rounded items-center">
+                <span class="mr-2 material-symbols-outlined text-gray-400">
+                    mail
+                </span>
+                <input type="text" name="email" placeholder="Anwani ya barua pepe" required class="flex-grow bg-transparent outline-none px-1" />
+            </div>
+            <div class="flex mb-2 border-2 p-1 rounded items-center">
+                <span class="mr-2 material-symbols-outlined text-gray-400">
+                    lock
+                </span>
+                <input type="password" name="password" placeholder="Nywila" required class="flex-grow bg-transparent outline-none px-1" />
+            </div>
+            <button type="submit" class="bg-yellow-400 rounded w-full p-1 mb-2 hover:bg-white hover:border-2 hover:border-yellow-400 hover:text-yellow-600 text-white">Ingia</button>
+            <div class="hidden rounded bg-red-50 border-2 border-red-500"><p class="text-center text-red-500">Anwani ya barua pepe au nywila sio sahihi</p></div>
+            <h3 class="text-center">Huna Akaunti?<a href="{% url 'client_register' %}" class="ml-1 text-yellow-600">Jisajili</a></h3>
+        </form>
+    </main>
+    <footer class="bg-yellow-400 w-full">
+        <div class="text-white text-center p-4">
+            &copy; 2024 KRCO-DS</div>
+    </footer>
+</body>
+
+</html>

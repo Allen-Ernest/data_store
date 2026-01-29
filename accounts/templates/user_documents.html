@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Nyaraka zangu | KRCO-DM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
+
+<div class="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-xl shadow">
+    <h2 class="text-2xl font-bold text-yellow-600 mb-2">Nyaraka zangu</h2>
+    <p class="text-sm text-gray-600 mb-6">Hii ni orodha ya nyaraka zako zote ulizopakia kwenye mfumo</p>
+
+    <a href="/client_transactions/export"
+       class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md shadow text-sm mb-4 inline-block">
+        Badili kwenda CSV
+    </a>
+    <div th:if="${!#lists.isEmpty(transactions)}" class="overflow-x-auto">
+        <table class="min-w-full table-auto border-collapse border border-gray-300">
+            <thead class="bg-yellow-100 text-left">
+            <tr>
+                <th class="px-4 py-2 border border-gray-300">#</th>
+                <th class="px-4 py-2 border border-gray-300">Jina</th>
+                <th class="px-4 py-2 border border-gray-300">Kiwango</th>
+                <th class="px-4 py-2 border border-gray-300">Tarehe ya kupakia</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if documents %}
+            {% for document in documents %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-4 py-2 border border-gray-300 font-mono text-sm">{{ forloop.counter }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ document.name }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ document.size | filesizeformat}}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ document.date }}</td>
+                <td class="px-4 py-2 border border-gray-300 text-center">
+                    <a th:href="@{'/client_transactions/receipt/' + ${tx.token}}"
+                       class="text-sm text-blue-600 hover:underline">Pakua</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+          <td colspan="6" class="py-6 px-4 text-center text-gray-500">
+                                Hakuna nyaraka yoyote
+          </td>
+                {% endif %}
+      </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

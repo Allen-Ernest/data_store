@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="sw" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Dashboard | KRCO-DM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+          font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex h-screen overflow-hidden">
+
+<aside class="w-64 bg-white shadow-md flex flex-col py-6 px-4 space-y-6">
+    <h2 class="text-2xl font-bold text-yellow-500">KRCO-DM Admin</h2>
+    <h2 class="text-lg text-center font-bold text-yellow-500">{{request.user.first_name}} {{request.user.last_name}}</h2>
+    <nav class="space-y-2">
+        <a href="{% url 'admin_dashboard' %}" class="block px-3 py-2 rounded-md hover:bg-yellow-100 font-semibold">Dashboard</a>
+        <a href="/admin_profile" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Akaunti</a>
+        <a href="{% url 'all_departments' %}" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Idara</a>
+        <a href="/admin_clients" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Watumishi</a>
+        <a href="/admin_transactions" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Nyaraka</a>
+        <form action="{% url 'logout_admin' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="w-full text-left px-3 py-2 rounded-md hover:bg-red-100 text-red-600 font-semibold">
+                Ondoka
+            </button>
+        </form>
+    </nav>
+</aside>
+
+<main class="flex-1 p-8 overflow-y-auto">
+    <header class="mb-6">
+        <h1 class="text-3xl font-bold">Muhtasari wa dashbodi</h1>
+        <p class="text-sm text-gray-500">Muhtasari mfupi wa mfumo</p>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white shadow rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-700">Idadi ya watumishi</h3>
+            <p class="text-3xl font-bold text-yellow-500" th:text="${totalClients}">123</p>
+        </div>
+
+        <div class="bg-white shadow rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-700">Idadi ya nyaraka</h3>
+            <p class="text-3xl font-bold text-yellow-500" th:text="${totalTransactions}">457</p>
+        </div>
+
+        <div class="bg-white shadow rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-700">Today's Purchases</h3>
+            <p class="text-3xl font-bold text-yellow-500" th:text="${todaysTransactions}">17</p>
+        </div>
+    </section>
+
+    <section class="space-y-8">
+        <div class="bg-white p-6 rounded-xl shadow">
+            <h2 class="text-xl font-semibold mb-4">Recent Transactions</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="bg-gray-50 font-semibold text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2">Token</th>
+                        <th class="px-4 py-2">Client</th>
+                        <th class="px-4 py-2">Amount</th>
+                        <th class="px-4 py-2">Units</th>
+                        <th class="px-4 py-2">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y" th:if="${recentTransactions}">
+                    <tr th:each="txn : ${recentTransactions}">
+                        <td class="px-4 py-2" th:text="${txn.token}">123456789012345</td>
+                        <td class="px-4 py-2" th:text="${txn.client.firstName + ' ' + txn.client.lastName}">John Doe</td>
+                        <td class="px-4 py-2" th:text="${txn.amount}">5000</td>
+                        <td class="px-4 py-2" th:text="${txn.unitsPurchased}">25.0</td>
+                        <td class="px-4 py-2" th:text="${txn.date}">2025-06-21</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow">
+            <h2 class="text-xl font-semibold mb-4">Recently Registered Clients</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="bg-gray-50 font-semibold text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2">Client Name</th>
+                        <th class="px-4 py-2">Meter Number</th>
+                        <th class="px-4 py-2">User ID</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y" th:if="${recentClients}">
+                    <tr th:each="client : ${recentClients}">
+                        <td class="px-4 py-2" th:text="${client.firstName + ' ' + client.lastName}">Jane Smith</td>
+                        <td class="px-4 py-2" th:text="${client.meterNum}">10020030040</td>
+                        <td class="px-4 py-2" th:text="${client.userId}">24</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
