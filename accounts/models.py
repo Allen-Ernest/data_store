@@ -45,7 +45,7 @@ class User(AbstractUser):
 
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='client_profile')
-    check_num = models.CharField(max_length=20, unique=True)
+    check_num = models.CharField(max_length=255, unique=True)
     department = models.ForeignKey("departments.Department", on_delete=models.CASCADE, null=False, default=1)
 
     def clean(self):

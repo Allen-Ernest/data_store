@@ -5,6 +5,7 @@ from django.contrib import messages
 from accounts.models import User, AdminProfile, ClientProfile
 from departments.models import Department
 from documents.models import Document
+import uuid
 
 def get_client_login(request):
     return render(request, 'user_login.html')
@@ -73,11 +74,15 @@ def client_register(request):
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
+        check_num = uuid.uuid4()
 
         try:
+            if password != confirm_password:
+                messages.error(request, "Passwords do not match")
+                return redirect('client_register')
             department = Department.objects.get(id=department_id)
             user = User.objects.create_user(email=email, password =password, first_name=first_name, middle_name=middle_name, last_name=last_name)
-            ClientProfile.objects.create(user=user, department=department)
+            ClientProfile.objects.create(user=user,check_num=check_num, department=department)
             return redirect('client_login')
         except Department.DoesNotExist:
             return ('client_register')

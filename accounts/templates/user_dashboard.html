@@ -18,7 +18,7 @@
         <a href="/client_dashboard" class="block px-3 py-2 rounded-md hover:bg-yellow-100 font-semibold">Dashbodi</a>
         <a href="/client_profile" class="block px-3 py-2 rounded-md hover:bg-yellow-100 font-semibold">Wasifu</a>
         <a href="{% url 'client_documents' %}" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Nyaraka zangu</a>
-        <a href="/client_transactions" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Mipangilio</a>
+        <a href="{% url 'client_documents' %}" class="block px-3 py-2 rounded-md hover:bg-yellow-100">Mipangilio</a>
         <form th:action="{% url 'client_logout' %}" method="post">
             {% csrf_token %}
             <button type="submit" class="w-full text-left px-3 py-2 rounded-md hover:bg-red-100 text-red-600 font-semibold">
@@ -50,7 +50,7 @@
         <h2 class="text-xl font-semibold mb-4">Kuhusu nyaraka zako</h2>
         <div class="flex flex-wrap gap-4">
             <a href="{% url 'add_document' %}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-md shadow font-semibold transition">Pakia nyaraka</a>
-            <a href="/client_transactions" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-md shadow font-semibold transition">Angalia Nyaraka</a>
+            <a href="{% url 'client_documents' %}" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-md shadow font-semibold transition">Angalia Nyaraka</a>
         </div>
     </div>
 </main>
